@@ -43,7 +43,17 @@ export default function InteractiveMascot() {
     }
   }, [])
 
-  const handleMouseEnter = () => {
+  const handleClick = () => {
+    // If already playing, stop and switch to new animation
+    if (isHovering) {
+      // Stop current sounds
+      Object.values(gigglesRef.current).forEach(sound => {
+        if (sound.playing()) {
+          sound.stop()
+        }
+      })
+    }
+    
     setIsHovering(true)
     const randomVideo = Math.floor(Math.random() * TOTAL_MASCOT_VIDEOS) + 1
     setCurrentVideo(randomVideo)
@@ -61,23 +71,19 @@ export default function InteractiveMascot() {
         sound.play()
       }
     }, 300) // 300ms delay for video to load and start
-  }
-
-  const handleMouseLeave = () => {
-    setIsHovering(false)
-    setCurrentVideo(null)
     
-    // Clear timeout to prevent delayed playback
-    if (audioTimeoutRef.current) {
-      clearTimeout(audioTimeoutRef.current)
-    }
-    
-    // Stop all sounds
-    Object.values(gigglesRef.current).forEach(sound => {
-      if (sound.playing()) {
-        sound.stop()
-      }
-    })
+    // Auto-stop after video plays once (approximately 2-3 seconds)
+    setTimeout(() => {
+      setIsHovering(false)
+      setCurrentVideo(null)
+      
+      // Stop all sounds
+      Object.values(gigglesRef.current).forEach(sound => {
+        if (sound.playing()) {
+          sound.stop()
+        }
+      })
+    }, 3000) // Stop after 3 seconds
   }
 
   return (
@@ -86,8 +92,7 @@ export default function InteractiveMascot() {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.5, duration: 0.6, type: "spring" }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
