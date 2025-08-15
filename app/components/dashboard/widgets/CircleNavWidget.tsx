@@ -1,6 +1,8 @@
 "use client";
 
 import * as motion from "motion/react-client";
+import { useEffect, useRef } from "react";
+import { Howl } from "howler";
 
 interface NavItem {
   id: string;
@@ -57,6 +59,36 @@ export default function CircleNavWidget({
   activeMode,
   onModeChange,
 }: CircleNavWidgetProps) {
+  const clunkSound = useRef<Howl | null>(null);
+  const clickSound = useRef<Howl | null>(null);
+
+  useEffect(() => {
+    clunkSound.current = new Howl({
+      src: ["/media/clank.mp3"],
+      volume: 0.2,
+      preload: true,
+    });
+    clickSound.current = new Howl({
+      src: ["/media/click.mp3"],
+      volume: 0.4,
+      preload: true,
+    });
+
+    return () => {
+      clunkSound.current?.unload();
+      clickSound.current?.unload();
+    };
+  }, []);
+
+  const handleHover = () => {
+    clunkSound.current?.play();
+  };
+
+  const handleClick = (mode: string) => {
+    clickSound.current?.play();
+    onModeChange(mode);
+  };
+
   return (
     <div className="flex items-center justify-center gap-4 mb-8">
       {navItems.map((item, index) => {
@@ -71,7 +103,8 @@ export default function CircleNavWidget({
             className="relative group"
           >
             <motion.button
-              onClick={() => onModeChange(item.id)}
+              onHoverStart={handleHover}
+              onClick={() => handleClick(item.id)}
               className={`relative w-16 h-16 rounded-full flex items-center justify-center text-2xl transition-all duration-300 ${
                 isActive
                   ? `bg-gradient-to-r ${item.color} shadow-lg shadow-current/30`

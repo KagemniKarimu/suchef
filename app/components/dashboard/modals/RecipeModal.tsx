@@ -2,6 +2,8 @@
 
 import * as motion from "motion/react-client";
 import { AnimatePresence } from "motion/react";
+import { useEffect, useRef } from "react";
+import { Howl } from "howler";
 
 interface RecipeModalProps {
   isOpen: boolean;
@@ -20,6 +22,39 @@ export default function RecipeModal({
   ingredients,
   isLoading = false,
 }: RecipeModalProps) {
+  const sizzleSound = useRef<Howl | null>(null);
+  const readySound = useRef<Howl | null>(null);
+
+  useEffect(() => {
+    sizzleSound.current = new Howl({
+      src: ["/media/sizzle_noisy.mp3"],
+      volume: 0.2,
+      loop: true,
+      preload: true,
+    });
+    readySound.current = new Howl({
+      src: ["/media/ping_ready.mp3"],
+      volume: 0.5,
+      preload: true,
+    });
+
+    return () => {
+      sizzleSound.current?.unload();
+      readySound.current?.unload();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isLoading && isOpen) {
+      sizzleSound.current?.play();
+    } else {
+      sizzleSound.current?.stop();
+      if (!isLoading && content && isOpen) {
+        readySound.current?.play();
+      }
+    }
+  }, [isLoading, isOpen, content]);
+
   const handleDownload = () => {
     // Create text content
     const textContent = `${title}\n${"=".repeat(title.length)}\n\n${

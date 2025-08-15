@@ -2,6 +2,7 @@
 
 import React, { Component, ErrorInfo, ReactNode } from "react";
 import * as motion from "motion/react-client";
+import { Howl } from "howler";
 
 interface Props {
   children: ReactNode;
@@ -19,9 +20,21 @@ interface State {
 }
 
 export default class ErrorBoundary extends Component<Props, State> {
+  private failSound: Howl | null = null;
+
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false, error: null };
+    
+    this.failSound = new Howl({
+      src: ["/media/ping_fail.mp3"],
+      volume: 0.5,
+      preload: true,
+    });
+  }
+
+  componentWillUnmount() {
+    this.failSound?.unload();
   }
 
   static getDerivedStateFromError(error: Error): State {
@@ -29,6 +42,7 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    this.failSound?.play();
     console.error(
       `ErrorBoundary ${this.props.name || "unnamed"} caught:`,
       error,

@@ -1,6 +1,8 @@
 "use client";
 
 import * as motion from "motion/react-client";
+import { useEffect, useRef } from "react";
+import { Howl } from "howler";
 
 interface ComingSoonModalProps {
   isOpen: boolean;
@@ -15,6 +17,29 @@ export default function ComingSoonModal({
   featureName = "This feature",
   customMessage,
 }: ComingSoonModalProps) {
+  const sizzleSound = useRef<Howl | null>(null);
+
+  useEffect(() => {
+    sizzleSound.current = new Howl({
+      src: ["/media/sizzle_noisy.mp3"],
+      volume: 0.15,
+      loop: true,
+      preload: true,
+    });
+
+    return () => {
+      sizzleSound.current?.unload();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      sizzleSound.current?.play();
+    } else {
+      sizzleSound.current?.stop();
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (

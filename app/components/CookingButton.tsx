@@ -2,12 +2,27 @@
 
 import { animate, motion, useMotionValue, useTransform } from "motion/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { Howl } from "howler";
 
 export default function CookingButton() {
   const progress = useMotionValue(0);
   const router = useRouter();
   const [isHolding, setIsHolding] = useState(false);
+  const sizzleSound = useRef<Howl | null>(null);
+
+  useEffect(() => {
+    sizzleSound.current = new Howl({
+      src: ["/media/sizzle_subtle.mp3"],
+      volume: 0.3,
+      loop: true,
+      preload: true,
+    });
+
+    return () => {
+      sizzleSound.current?.unload();
+    };
+  }, []);
 
   // Button transforms
   const buttonScale = useTransform(progress, [0, 0.5, 1], [1, 0.95, 0.9]);
@@ -101,6 +116,7 @@ export default function CookingButton() {
         className="px-8 py-4 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white font-semibold rounded-full text-lg shadow-lg"
         onPointerDown={() => {
           setIsHolding(true);
+          sizzleSound.current?.play();
           progress.set(0);
           animate(progress, 1, {
             duration: 1.5,
@@ -110,12 +126,14 @@ export default function CookingButton() {
         }}
         onPointerUp={() => {
           setIsHolding(false);
+          sizzleSound.current?.stop();
           if (progress.get() < 0.95) {
             animate(progress, 0, { duration: 0.3 });
           }
         }}
         onPointerLeave={() => {
           setIsHolding(false);
+          sizzleSound.current?.stop();
           animate(progress, 0, { duration: 0.3 });
         }}
       >

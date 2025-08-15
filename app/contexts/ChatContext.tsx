@@ -1,7 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useRef, useEffect } from "react";
 import { Session, Conversation } from "reachat";
+import { Howl } from "howler";
 
 interface ChatContextType {
   sessions: Session[];
@@ -36,6 +37,19 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   ]);
   const [activeSessionId, setActiveSessionId] = useState<string>("1");
   const [loading, setLoading] = useState<boolean>(false);
+  const successSound = useRef<Howl | null>(null);
+
+  useEffect(() => {
+    successSound.current = new Howl({
+      src: ["/media/ping_success.mp3"],
+      volume: 0.4,
+      preload: true,
+    });
+
+    return () => {
+      successSound.current?.unload();
+    };
+  }, []);
 
   const addSession = (session: Session) => {
     setSessions((prev) => [...prev, session]);
@@ -88,6 +102,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         setSessions(
           sessions.map((s) => (s.id === activeSessionId ? updated : s)),
         );
+        successSound.current?.play();
       } catch (error) {
         console.error("Failed to send message:", error);
         // Fallback response on error

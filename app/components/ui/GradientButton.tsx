@@ -1,6 +1,7 @@
 "use client";
 
 import * as motion from "motion/react-client";
+import { useClickSound } from "@/app/hooks/useClickSound";
 
 export type ButtonVariant =
   | "orange"
@@ -49,6 +50,7 @@ export default function GradientButton({
   icon,
   animate,
 }: GradientButtonProps) {
+  const playClick = useClickSound();
   // Special animations for specific variants
   const getAnimationProps = () => {
     if (animate) return animate;
@@ -81,7 +83,12 @@ export default function GradientButton({
     return (
       <motion.button
         {...getAnimationProps()}
-        onClick={onClick}
+        onClick={() => {
+          if (!disabled) {
+            playClick();
+            onClick?.();
+          }
+        }}
         disabled={disabled}
         className={`${baseClasses} bg-gray-700`}
       >
@@ -100,7 +107,12 @@ export default function GradientButton({
   return (
     <motion.button
       {...getAnimationProps()}
-      onClick={onClick}
+      onClick={() => {
+        if (!disabled) {
+          playClick();
+          onClick?.();
+        }
+      }}
       disabled={disabled}
       className={`
         bg-gradient-to-r ${gradients[variant]} 

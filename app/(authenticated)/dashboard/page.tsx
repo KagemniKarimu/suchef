@@ -8,6 +8,7 @@ import ModeErrorBoundary from "../../components/dashboard/ModeErrorBoundary";
 import ConvaiWidget from "../../components/dashboard/widgets/ConvaiWidget";
 import ComingSoonModal from "../../components/dashboard/modals/ComingSoonModal";
 import { useChat } from "../../contexts/ChatContext";
+import { useClickSound } from "../../hooks/useClickSound";
 import {
   LearnMode,
   NyanyaMode,
@@ -23,6 +24,7 @@ export default function DashboardPage() {
   const [activeMode, setActiveMode] = useState<string>("nyanya");
   const [comingSoonOpen, setComingSoonOpen] = useState(false);
   const [comingSoonMessage, setComingSoonMessage] = useState("");
+  const playClick = useClickSound();
 
   // Get chat state from context
   const { sessions, activeSessionId, loading, sendMessage, setActiveSession } =
@@ -110,7 +112,10 @@ export default function DashboardPage() {
           {/* Persona Toggle */}
           <div className="flex items-center gap-2 bg-gray-800 rounded-full p-1">
             <button
-              onClick={() => setSelectedPersona("nyanya")}
+              onClick={() => {
+                playClick();
+                setSelectedPersona("nyanya");
+              }}
               className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
                 selectedPersona === "nyanya"
                   ? "bg-gradient-to-r from-orange-500 to-pink-500 text-white"
@@ -120,7 +125,10 @@ export default function DashboardPage() {
               Nyanya 🍳
             </button>
             <button
-              onClick={() => setSelectedPersona("neutral")}
+              onClick={() => {
+                playClick();
+                setSelectedPersona("neutral");
+              }}
               className={`px-3 py-1 rounded-full text-sm font-medium transition-all ${
                 selectedPersona === "neutral"
                   ? "bg-gray-600 text-white"
