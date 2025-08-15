@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import * as motion from "motion/react-client"
-import { LeaderboardItem, weeklyTopRecipes } from "@/app/mock/LeaderboardData"
+import * as motion from "motion/react-client";
+import { weeklyTopRecipes } from "@/app/mock/LeaderboardData";
 
 export default function LeaderboardWidget() {
   const handleViewAllClick = () => {
     // Dispatch custom event to switch to review mode
-    const event = new CustomEvent('changeMode', { detail: 'review' })
-    window.dispatchEvent(event)
-  }
+    const event = new CustomEvent("changeMode", { detail: "review" });
+    window.dispatchEvent(event);
+  };
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -22,7 +22,7 @@ export default function LeaderboardWidget() {
         </h2>
         <span className="text-2xl">🏆</span>
       </div>
-      
+
       {/* Leaderboard Items */}
       <div className="space-y-3">
         {weeklyTopRecipes.map((item) => (
@@ -31,12 +31,17 @@ export default function LeaderboardWidget() {
             whileHover={{ x: 4 }}
             className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700/50 cursor-pointer transition-colors"
           >
-            <span className={`font-bold text-lg ${
-              item.rank === 1 ? "text-yellow-500" :
-              item.rank === 2 ? "text-gray-400" :
-              item.rank === 3 ? "text-orange-600" :
-              "text-gray-500"
-            }`}>
+            <span
+              className={`font-bold text-lg ${
+                item.rank === 1
+                  ? "text-yellow-500"
+                  : item.rank === 2
+                    ? "text-gray-400"
+                    : item.rank === 3
+                      ? "text-orange-600"
+                      : "text-gray-500"
+              }`}
+            >
               #{item.rank}
             </span>
             <span className="text-xl">{item.emoji}</span>
@@ -45,18 +50,20 @@ export default function LeaderboardWidget() {
               <p className="text-xs text-gray-400">by {item.chef}</p>
             </div>
             <div className="text-right">
-              <p className="text-sm font-semibold text-gray-300">⭐ {item.rating}</p>
+              <p className="text-sm font-semibold text-gray-300">
+                ⭐ {item.rating}
+              </p>
             </div>
           </motion.div>
         ))}
       </div>
-      
-      <button 
+
+      <button
         onClick={handleViewAllClick}
         className="w-full mt-4 text-center text-sm text-orange-500 hover:text-orange-600 font-medium transition-colors"
       >
         View All Rankings →
       </button>
     </motion.div>
-  )
+  );
 }

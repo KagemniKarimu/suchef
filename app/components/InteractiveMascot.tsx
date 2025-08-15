@@ -1,30 +1,30 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
-import * as motion from "motion/react-client"
-import { Howl } from "howler"
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+import * as motion from "motion/react-client";
+import { Howl } from "howler";
 
-const TOTAL_MASCOT_VIDEOS = 4
+const TOTAL_MASCOT_VIDEOS = 4;
 
 export default function InteractiveMascot() {
-  const [currentVideo, setCurrentVideo] = useState<number | null>(null)
-  const [isHovering, setIsHovering] = useState(false)
-  const videoRefs = useRef<{ [key: number]: HTMLVideoElement }>({})
-  const gigglesRef = useRef<{ [key: number]: Howl }>({})
-  const audioTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const [currentVideo, setCurrentVideo] = useState<number | null>(null);
+  const [isHovering, setIsHovering] = useState(false);
+  const videoRefs = useRef<{ [key: number]: HTMLVideoElement }>({});
+  const gigglesRef = useRef<{ [key: number]: Howl }>({});
+  const audioTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Preload all videos and audio on mount
   useEffect(() => {
     for (let i = 1; i <= TOTAL_MASCOT_VIDEOS; i++) {
       // Preload videos
-      const video = document.createElement('video')
-      video.src = `/media/mascot_action_${i}.mp4`
-      video.preload = 'auto'
-      video.loop = true
-      video.muted = true
-      video.playsInline = true
-      videoRefs.current[i] = video
+      const video = document.createElement("video");
+      video.src = `/media/mascot_action_${i}.mp4`;
+      video.preload = "auto";
+      video.loop = true;
+      video.muted = true;
+      video.playsInline = true;
+      videoRefs.current[i] = video;
 
       // Preload giggle sounds with Howler
       gigglesRef.current[i] = new Howl({
@@ -32,59 +32,60 @@ export default function InteractiveMascot() {
         volume: 0.7,
         preload: true,
         onloaderror: (id, error) => {
-          console.error(`Failed to load giggle ${i}:`, error)
-        }
-      })
+          console.error(`Failed to load giggle ${i}:`, error);
+        },
+      });
     }
 
-    // Cleanup
+    // Cleanup - copy ref to avoid stale closure
+    const sounds = gigglesRef.current;
     return () => {
-      Object.values(gigglesRef.current).forEach(sound => sound.unload())
-    }
-  }, [])
+      Object.values(sounds).forEach((sound) => sound.unload());
+    };
+  }, []);
 
   const handleClick = () => {
     // If already playing, stop and switch to new animation
     if (isHovering) {
       // Stop current sounds
-      Object.values(gigglesRef.current).forEach(sound => {
+      Object.values(gigglesRef.current).forEach((sound) => {
         if (sound.playing()) {
-          sound.stop()
+          sound.stop();
         }
-      })
+      });
     }
-    
-    setIsHovering(true)
-    const randomVideo = Math.floor(Math.random() * TOTAL_MASCOT_VIDEOS) + 1
-    setCurrentVideo(randomVideo)
-    
+
+    setIsHovering(true);
+    const randomVideo = Math.floor(Math.random() * TOTAL_MASCOT_VIDEOS) + 1;
+    setCurrentVideo(randomVideo);
+
     // Clear any existing timeout
     if (audioTimeoutRef.current) {
-      clearTimeout(audioTimeoutRef.current)
+      clearTimeout(audioTimeoutRef.current);
     }
-    
+
     // Play corresponding giggle sound with random pitch after a delay
     audioTimeoutRef.current = setTimeout(() => {
       if (gigglesRef.current[randomVideo]) {
-        const sound = gigglesRef.current[randomVideo]
-        sound.rate(0.9 + Math.random() * 0.2) // Random pitch each time
-        sound.play()
+        const sound = gigglesRef.current[randomVideo];
+        sound.rate(0.9 + Math.random() * 0.2); // Random pitch each time
+        sound.play();
       }
-    }, 300) // 300ms delay for video to load and start
-    
+    }, 300); // 300ms delay for video to load and start
+
     // Auto-stop after video plays once (approximately 2-3 seconds)
     setTimeout(() => {
-      setIsHovering(false)
-      setCurrentVideo(null)
-      
+      setIsHovering(false);
+      setCurrentVideo(null);
+
       // Stop all sounds
-      Object.values(gigglesRef.current).forEach(sound => {
+      Object.values(gigglesRef.current).forEach((sound) => {
         if (sound.playing()) {
-          sound.stop()
+          sound.stop();
         }
-      })
-    }, 3000) // Stop after 3 seconds
-  }
+      });
+    }, 3000); // Stop after 3 seconds
+  };
 
   return (
     <motion.div
@@ -102,7 +103,7 @@ export default function InteractiveMascot() {
             src="/media/mascot.png"
             alt="Suchef Mascot"
             fill
-            className={`object-contain transition-opacity duration-200 ${isHovering && currentVideo ? 'opacity-0' : 'opacity-100'}`}
+            className={`object-contain transition-opacity duration-200 ${isHovering && currentVideo ? "opacity-0" : "opacity-100"}`}
             priority
           />
           {isHovering && currentVideo && (
@@ -118,7 +119,7 @@ export default function InteractiveMascot() {
           )}
         </div>
       </div>
-      
+
       {isHovering && (
         <motion.div
           className="absolute -bottom-8 left-1/2 transform -translate-x-1/2"
@@ -130,5 +131,5 @@ export default function InteractiveMascot() {
         </motion.div>
       )}
     </motion.div>
-  )
+  );
 }
