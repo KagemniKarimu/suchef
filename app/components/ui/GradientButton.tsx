@@ -22,11 +22,6 @@ interface GradientButtonProps {
   disabled?: boolean;
   fullWidth?: boolean;
   icon?: React.ReactNode;
-  animate?: {
-    whileHover?: object;
-    whileTap?: object;
-    transition?: object;
-  }; // For special animations like chaos button rotation
 }
 
 const gradients: Record<ButtonVariant, string> = {
@@ -48,13 +43,10 @@ export default function GradientButton({
   disabled = false,
   fullWidth = false,
   icon,
-  animate,
 }: GradientButtonProps) {
   const playClick = useClickSound();
   // Special animations for specific variants
   const getAnimationProps = () => {
-    if (animate) return animate;
-
     if (variant === "chaos") {
       return {
         whileHover: { scale: 1.05, rotate: 360 },

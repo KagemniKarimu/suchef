@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     // Rate limiting
     const identifier = request.headers.get("x-forwarded-for") || "anonymous";
-    const { success, remaining } = rateLimit.check(identifier);
+    const { success } = rateLimit.check(identifier);
     
     if (!success) {
       return NextResponse.json(

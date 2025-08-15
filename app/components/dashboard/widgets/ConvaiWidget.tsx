@@ -29,6 +29,7 @@ export default function ConvaiWidget({ isActive }: ConvaiWidgetProps) {
 
   return (
     <div className="fixed bottom-4 right-4 z-50">
+      {/* @ts-expect-error - ElevenLabs web component */}
       <elevenlabs-convai agent-id="agent_3601k2pwc16nfchtekwnmpfvq7vm" />
     </div>
   );
