@@ -1,8 +1,9 @@
 /* Staggered Grid Background */
 .grid-cell {
-  background: linear-gradient(135deg, 
+  background: linear-gradient(
+    135deg,
     rgba(251, 146, 60, 0.15),
-    rgba(239, 68, 68, 0.15), 
+    rgba(239, 68, 68, 0.15),
     rgba(236, 72, 153, 0.15)
   );
   border-radius: 0.5rem;
@@ -10,7 +11,8 @@
 }
 
 .origin-cell {
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     rgba(251, 146, 60, 0.35),
     rgba(239, 68, 68, 0.35),
     rgba(236, 72, 153, 0.35)
@@ -19,15 +21,17 @@
 
 @media (prefers-color-scheme: dark) {
   .grid-cell {
-    background: linear-gradient(135deg,
+    background: linear-gradient(
+      135deg,
       rgba(251, 146, 60, 0.08),
       rgba(239, 68, 68, 0.08),
       rgba(236, 72, 153, 0.08)
     );
   }
-  
+
   .origin-cell {
-    background: linear-gradient(135deg,
+    background: linear-gradient(
+      135deg,
       rgba(251, 146, 60, 0.18),
       rgba(239, 68, 68, 0.18),
       rgba(236, 72, 153, 0.18)

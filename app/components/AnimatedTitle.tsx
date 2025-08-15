@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as motion from "motion/react-client"
+import * as motion from "motion/react-client";
 
 export default function AnimatedTitle() {
   return (
@@ -13,20 +13,20 @@ export default function AnimatedTitle() {
     >
       <motion.span
         className="inline-block bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 bg-clip-text text-transparent"
-        animate={{ 
+        animate={{
           backgroundPosition: ["0%", "100%", "0%"],
         }}
         transition={{
           duration: 3,
           repeat: Infinity,
-          ease: "linear"
+          ease: "linear",
         }}
         style={{
-          backgroundSize: "200% 200%"
+          backgroundSize: "200% 200%",
         }}
       >
         suchef
       </motion.span>
     </motion.h1>
-  )
+  );
 }

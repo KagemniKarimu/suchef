@@ -1,37 +1,37 @@
-"use client"
+"use client";
 
-import * as motion from "motion/react-client"
-import { useState } from "react"
-import { Session } from "reachat"
+import * as motion from "motion/react-client";
+import { useState } from "react";
+import { Session } from "reachat";
 
 interface LearnModeProps {
-  sessions: Session[]
-  activeSessionId: string
-  loading: boolean
-  onSendMessage: (message: string) => Promise<void>
-  onSelectSession: (id: string) => void
+  sessions: Session[];
+  activeSessionId: string;
+  loading: boolean;
+  onSendMessage: (message: string) => Promise<void>;
+  onSelectSession: (id: string) => void;
 }
 
-export default function LearnMode({ 
-  sessions, 
-  activeSessionId, 
-  loading, 
-  onSendMessage
+export default function LearnMode({
+  sessions,
+  activeSessionId,
+  loading,
+  onSendMessage,
 }: LearnModeProps) {
-  const [inputValue, setInputValue] = useState("")
-  const [isExpanded, setIsExpanded] = useState(false)
-  
-  const activeSession = sessions.find(s => s.id === activeSessionId)
-  const conversations = activeSession?.conversations || []
-  
+  const [inputValue, setInputValue] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const activeSession = sessions.find((s) => s.id === activeSessionId);
+  const conversations = activeSession?.conversations || [];
+
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (inputValue.trim() && !loading) {
-      await onSendMessage(inputValue)
-      setInputValue("")
+      await onSendMessage(inputValue);
+      setInputValue("");
     }
-  }
-  
+  };
+
   if (isExpanded) {
     // Full-screen mode
     return (
@@ -49,12 +49,22 @@ export default function LearnMode({
               onClick={() => setIsExpanded(false)}
               className="text-gray-400 hover:text-gray-200 p-2 hover:bg-gray-700 rounded-lg transition-colors"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
-          
+
           <div className="flex-1 bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-700 overflow-hidden flex flex-col">
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
@@ -81,16 +91,25 @@ export default function LearnMode({
                   <div className="bg-gray-700/50 border border-orange-500/30 rounded-2xl p-4">
                     <div className="flex gap-2">
                       <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" />
-                      <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                      <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                      <div
+                        className="w-2 h-2 bg-orange-500 rounded-full animate-bounce"
+                        style={{ animationDelay: "0.1s" }}
+                      />
+                      <div
+                        className="w-2 h-2 bg-orange-500 rounded-full animate-bounce"
+                        style={{ animationDelay: "0.2s" }}
+                      />
                     </div>
                   </div>
                 </div>
               )}
             </div>
-            
+
             {/* Input */}
-            <form onSubmit={handleSubmit} className="border-t border-gray-700 p-4 flex gap-3">
+            <form
+              onSubmit={handleSubmit}
+              className="border-t border-gray-700 p-4 flex gap-3"
+            >
               <input
                 type="text"
                 value={inputValue}
@@ -110,9 +129,9 @@ export default function LearnMode({
           </div>
         </div>
       </motion.div>
-    )
+    );
   }
-  
+
   // Compact dashboard mode
   return (
     <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-xl shadow-blue-500/10 border border-blue-500/30 overflow-hidden">
@@ -121,21 +140,31 @@ export default function LearnMode({
           <h3 className="text-xl font-bold text-gray-100 flex items-center gap-2">
             <span>🍳</span> Cooking Assistant
           </h3>
-          <p className="text-sm text-gray-400">Ask me anything about cooking!</p>
+          <p className="text-sm text-gray-400">
+            Ask me anything about cooking!
+          </p>
         </div>
         <button
           onClick={() => setIsExpanded(true)}
           className="text-gray-400 hover:text-gray-200 p-2 hover:bg-gray-700 rounded-lg transition-colors"
           title="Expand to full view"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-              d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" 
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
             />
           </svg>
         </button>
       </div>
-      
+
       <div className="h-[400px] flex flex-col">
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
@@ -162,16 +191,25 @@ export default function LearnMode({
               <div className="bg-gray-700/50 border border-orange-500/30 rounded-xl p-3">
                 <div className="flex gap-1">
                   <div className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-bounce" />
-                  <div className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                  <div className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                  <div
+                    className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-bounce"
+                    style={{ animationDelay: "0.1s" }}
+                  />
+                  <div
+                    className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-bounce"
+                    style={{ animationDelay: "0.2s" }}
+                  />
                 </div>
               </div>
             </div>
           )}
         </div>
-        
+
         {/* Input */}
-        <form onSubmit={handleSubmit} className="border-t border-gray-700 p-3 flex gap-2">
+        <form
+          onSubmit={handleSubmit}
+          className="border-t border-gray-700 p-3 flex gap-2"
+        >
           <input
             type="text"
             value={inputValue}
@@ -190,5 +228,5 @@ export default function LearnMode({
         </form>
       </div>
     </div>
-  )
+  );
 }

@@ -1,39 +1,40 @@
-"use client"
+"use client";
 
-import * as motion from "motion/react-client"
-import { usePathname, useRouter } from "next/navigation"
-import { useState } from "react"
-import ComingSoonModal from "../modals/ComingSoonModal"
+import * as motion from "motion/react-client";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import ComingSoonModal from "../modals/ComingSoonModal";
 
 export default function QuickActionsWidget() {
-  const pathname = usePathname()
-  const router = useRouter()
-  const [showComingSoon, setShowComingSoon] = useState(false)
-  const isGuidePage = pathname?.includes('/guide') || pathname?.includes('/dashboard')
+  const pathname = usePathname();
+  const router = useRouter();
+  const [showComingSoon, setShowComingSoon] = useState(false);
+  const isGuidePage =
+    pathname?.includes("/guide") || pathname?.includes("/dashboard");
 
   const handleGuidedCookingClick = (e: React.MouseEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (isGuidePage) {
       // We're already on the guide page, show the coming soon modal
-      setShowComingSoon(true)
+      setShowComingSoon(true);
     } else {
       // Navigate to cook page
-      router.push('/cook')
+      router.push("/cook");
     }
-  }
+  };
 
   const handleFavoritesClick = (e: React.MouseEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // Navigate to dashboard and trigger review mode
-    router.push('/dashboard')
+    router.push("/dashboard");
     // After navigation, we'd need to set the mode to "review"
     // This would require lifting state up or using a global state manager
     setTimeout(() => {
       // Trigger review mode after navigation
-      const event = new CustomEvent('changeMode', { detail: 'review' })
-      window.dispatchEvent(event)
-    }, 100)
-  }
+      const event = new CustomEvent("changeMode", { detail: "review" });
+      window.dispatchEvent(event);
+    }, 100);
+  };
 
   return (
     <>
@@ -57,7 +58,7 @@ export default function QuickActionsWidget() {
             </div>
           </div>
         </motion.div>
-        
+
         <motion.div
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
@@ -81,5 +82,5 @@ export default function QuickActionsWidget() {
         customMessage="For now, please use Nyanya in interactive mode! Toggle Nyanya on from the top-right corner and say 'Guide me through making [your recipe]' to get step-by-step cooking instructions."
       />
     </>
-  )
+  );
 }

@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import RecipeRandomizerWidget from "../widgets/RecipeRandomizerWidget"
-import LeaderboardWidget from "../widgets/LeaderboardWidget"
+import RecipeRandomizerWidget from "../widgets/RecipeRandomizerWidget";
+import LeaderboardWidget from "../widgets/LeaderboardWidget";
 
 export default function RandomizerMode() {
   return (
@@ -13,5 +13,5 @@ export default function RandomizerMode() {
         <LeaderboardWidget />
       </div>
     </div>
-  )
+  );
 }

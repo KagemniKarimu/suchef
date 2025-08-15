@@ -1,8 +1,8 @@
-import AnimatedTitle from "./components/AnimatedTitle"
-import HeroDescription from "./components/HeroDescription"
-import InteractiveMascot from "./components/InteractiveMascot"
-import StaggeredGridBackground from "./components/StaggeredGridBackground"
-import CookingButton from "./components/CookingButton"
+import AnimatedTitle from "./components/AnimatedTitle";
+import HeroDescription from "./components/HeroDescription";
+import InteractiveMascot from "./components/InteractiveMascot";
+import StaggeredGridBackground from "./components/StaggeredGridBackground";
+import CookingButton from "./components/CookingButton";
 
 export default function Home() {
   return (
@@ -17,5 +17,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-  )
+  );
 }

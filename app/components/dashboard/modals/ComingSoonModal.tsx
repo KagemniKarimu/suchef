@@ -1,16 +1,21 @@
-"use client"
+"use client";
 
-import * as motion from "motion/react-client"
+import * as motion from "motion/react-client";
 
 interface ComingSoonModalProps {
-  isOpen: boolean
-  onClose: () => void
-  featureName?: string
-  customMessage?: string
+  isOpen: boolean;
+  onClose: () => void;
+  featureName?: string;
+  customMessage?: string;
 }
 
-export default function ComingSoonModal({ isOpen, onClose, featureName = "This feature", customMessage }: ComingSoonModalProps) {
-  if (!isOpen) return null
+export default function ComingSoonModal({
+  isOpen,
+  onClose,
+  featureName = "This feature",
+  customMessage,
+}: ComingSoonModalProps) {
+  if (!isOpen) return null;
 
   return (
     <motion.div
@@ -30,15 +35,25 @@ export default function ComingSoonModal({ isOpen, onClose, featureName = "This f
       >
         {/* Background gradient effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 pointer-events-none" />
-        
+
         <div className="relative z-10">
           {/* Close button */}
           <button
             onClick={onClose}
             className="absolute -top-2 -right-2 text-gray-400 hover:text-gray-200 p-2 hover:bg-gray-700 rounded-lg transition-colors"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
 
@@ -46,7 +61,7 @@ export default function ComingSoonModal({ isOpen, onClose, featureName = "This f
             {/* Animated Skillet with Steam */}
             <div className="relative inline-block mb-6">
               <div className="text-6xl animate-wiggle">🍳</div>
-              
+
               {/* Steam/Heat Lines Animation */}
               <div className="absolute inset-0 pointer-events-none">
                 <div className="steam-line steam-1" />
@@ -58,13 +73,16 @@ export default function ComingSoonModal({ isOpen, onClose, featureName = "This f
             <h2 className="text-2xl font-bold text-gray-100 mb-3">
               Still Cooking! 👨‍🍳
             </h2>
-            
+
             <p className="text-gray-300 mb-2">
               {featureName} is simmering in our kitchen
             </p>
-            
-            <p className={`${customMessage ? "text-base" : "text-sm"} text-gray-400 mb-6`}>
-              {customMessage || "Our chefs are working hard to perfect this recipe. Check back soon for a taste of what's cooking!"}
+
+            <p
+              className={`${customMessage ? "text-base" : "text-sm"} text-gray-400 mb-6`}
+            >
+              {customMessage ||
+                "Our chefs are working hard to perfect this recipe. Check back soon for a taste of what's cooking!"}
             </p>
 
             <div className="flex items-center justify-center gap-2 text-orange-400 text-sm">
@@ -97,9 +115,16 @@ export default function ComingSoonModal({ isOpen, onClose, featureName = "This f
 
       <style jsx>{`
         @keyframes wiggle {
-          0%, 100% { transform: rotate(0deg); }
-          25% { transform: rotate(-5deg); }
-          75% { transform: rotate(5deg); }
+          0%,
+          100% {
+            transform: rotate(0deg);
+          }
+          25% {
+            transform: rotate(-5deg);
+          }
+          75% {
+            transform: rotate(5deg);
+          }
         }
 
         @keyframes steam {
@@ -127,8 +152,9 @@ export default function ComingSoonModal({ isOpen, onClose, featureName = "This f
           position: absolute;
           width: 2px;
           height: 20px;
-          background: linear-gradient(to top, 
-            transparent 0%, 
+          background: linear-gradient(
+            to top,
+            transparent 0%,
             rgba(255, 255, 255, 0.4) 20%,
             rgba(255, 255, 255, 0.6) 50%,
             transparent 100%
@@ -156,5 +182,5 @@ export default function ComingSoonModal({ isOpen, onClose, featureName = "This f
         }
       `}</style>
     </motion.div>
-  )
+  );
 }

@@ -1,13 +1,16 @@
-"use client"
+"use client";
 
-import ErrorBoundary from "../ErrorBoundary"
+import ErrorBoundary from "../ErrorBoundary";
 
 interface ModeErrorBoundaryProps {
-  children: React.ReactNode
-  modeName: string
+  children: React.ReactNode;
+  modeName: string;
 }
 
-export default function ModeErrorBoundary({ children, modeName }: ModeErrorBoundaryProps) {
+export default function ModeErrorBoundary({
+  children,
+  modeName,
+}: ModeErrorBoundaryProps) {
   return (
     <ErrorBoundary
       name={`${modeName}-mode`}
@@ -20,17 +23,18 @@ export default function ModeErrorBoundary({ children, modeName }: ModeErrorBound
               {modeName} Mode Unavailable
             </h3>
             <p className="text-gray-400">
-              This cooking mode is temporarily out of order. Please try another mode or refresh the page.
+              This cooking mode is temporarily out of order. Please try another
+              mode or refresh the page.
             </p>
           </div>
         </div>
       }
       onError={(error, errorInfo) => {
         // Log to your error tracking service
-        console.error(`${modeName} mode error:`, error, errorInfo)
+        console.error(`${modeName} mode error:`, error, errorInfo);
       }}
     >
       {children}
     </ErrorBoundary>
-  )
+  );
 }

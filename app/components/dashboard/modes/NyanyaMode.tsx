@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import NyanyaWidget from "../widgets/NyanyaWidget"
-import RecentActivityWidget from "../widgets/RecentActivityWidget"
-import LeaderboardWidget from "../widgets/LeaderboardWidget"
+import NyanyaWidget from "../widgets/NyanyaWidget";
+import RecentActivityWidget from "../widgets/RecentActivityWidget";
+import LeaderboardWidget from "../widgets/LeaderboardWidget";
 
 export default function NyanyaMode() {
   return (
@@ -15,5 +15,5 @@ export default function NyanyaMode() {
         <LeaderboardWidget />
       </div>
     </div>
-  )
+  );
 }

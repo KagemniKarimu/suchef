@@ -16,8 +16,8 @@ export const cuisineOptions = [
   "Nigerian",
   "South African",
   "Egyptian",
-  "Kenyan"
-]
+  "Kenyan",
+];
 
 export const cookingTimeOptions = [
   "Under 15 min",
@@ -25,14 +25,10 @@ export const cookingTimeOptions = [
   "30-45 min",
   "45-60 min",
   "1-2 hours",
-  "Over 2 hours"
-]
+  "Over 2 hours",
+];
 
-export const difficultyOptions = [
-  "Easy",
-  "Medium",
-  "Hard"
-]
+export const difficultyOptions = ["Easy", "Medium", "Hard"];
 
 export const dietaryOptions = [
   "Vegetarian",
@@ -43,8 +39,8 @@ export const dietaryOptions = [
   "Paleo",
   "Low-Carb",
   "Halal",
-  "Kosher"
-]
+  "Kosher",
+];
 
 export const mealTypeOptions = [
   "Breakfast",
@@ -53,5 +49,5 @@ export const mealTypeOptions = [
   "Snack",
   "Dessert",
   "Appetizer",
-  "Beverage"
-]
+  "Beverage",
+];

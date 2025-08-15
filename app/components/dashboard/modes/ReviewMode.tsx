@@ -1,25 +1,32 @@
-"use client"
+"use client";
 
-import { AnimatePresence, motion, usePresenceData, wrap } from "motion/react"
-import { forwardRef, SVGProps, useState } from "react"
-import AddRecipeModal, { RecipeFormData } from "../modals/AddRecipeModal"
-import ComingSoonModal from "../modals/ComingSoonModal"
-import { Recipe, initialRecipes } from "@/app/mock/RecipeData"
+import { AnimatePresence, motion, usePresenceData, wrap } from "motion/react";
+import { forwardRef, SVGProps, useState } from "react";
+import AddRecipeModal, { RecipeFormData } from "../modals/AddRecipeModal";
+import ComingSoonModal from "../modals/ComingSoonModal";
+import { Recipe, initialRecipes } from "@/app/mock/RecipeData";
 
 export default function ReviewMode() {
-  const [recipes, setRecipes] = useState(initialRecipes)
-  const [selectedRecipeIndex, setSelectedRecipeIndex] = useState(0)
-  const [direction, setDirection] = useState<1 | -1>(1)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [comingSoonModal, setComingSoonModal] = useState<{ isOpen: boolean; feature: string }>({ 
-    isOpen: false, 
-    feature: "" 
-  })
+  const [recipes, setRecipes] = useState(initialRecipes);
+  const [selectedRecipeIndex, setSelectedRecipeIndex] = useState(0);
+  const [direction, setDirection] = useState<1 | -1>(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [comingSoonModal, setComingSoonModal] = useState<{
+    isOpen: boolean;
+    feature: string;
+  }>({
+    isOpen: false,
+    feature: "",
+  });
 
   function setSlide(newDirection: 1 | -1) {
-    const nextIndex = wrap(0, recipes.length, selectedRecipeIndex + newDirection)
-    setSelectedRecipeIndex(nextIndex)
-    setDirection(newDirection)
+    const nextIndex = wrap(
+      0,
+      recipes.length,
+      selectedRecipeIndex + newDirection,
+    );
+    setSelectedRecipeIndex(nextIndex);
+    setDirection(newDirection);
   }
 
   const handleAddRecipe = (formData: RecipeFormData) => {
@@ -34,12 +41,12 @@ export default function ReviewMode() {
       cookingTime: formData.cookingTime,
       category: formData.category,
       color: "from-indigo-500 to-purple-500", // Default color for new recipes
-      emoji: formData.emoji
-    }
-    setRecipes([...recipes, newRecipe])
-  }
+      emoji: formData.emoji,
+    };
+    setRecipes([...recipes, newRecipe]);
+  };
 
-  const currentRecipe = recipes[selectedRecipeIndex]
+  const currentRecipe = recipes[selectedRecipeIndex];
 
   return (
     <>
@@ -63,8 +70,18 @@ export default function ReviewMode() {
             onClick={() => setIsModalOpen(true)}
             className="px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-lg font-semibold hover:shadow-lg transition-all flex items-center gap-2"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
             </svg>
             Add Recipe
           </motion.button>
@@ -82,20 +99,23 @@ export default function ReviewMode() {
           >
             <ArrowLeft />
           </motion.button>
-          
-          <AnimatePresence
-            custom={direction}
-            initial={false}
-            mode="popLayout"
-          >
-            <RecipeCard 
-              key={currentRecipe.id} 
-              recipe={currentRecipe} 
-              onReview={() => setComingSoonModal({ isOpen: true, feature: "Recipe reviews" })}
-              onSave={() => setComingSoonModal({ isOpen: true, feature: "Save to favorites" })}
+
+          <AnimatePresence custom={direction} initial={false} mode="popLayout">
+            <RecipeCard
+              key={currentRecipe.id}
+              recipe={currentRecipe}
+              onReview={() =>
+                setComingSoonModal({ isOpen: true, feature: "Recipe reviews" })
+              }
+              onSave={() =>
+                setComingSoonModal({
+                  isOpen: true,
+                  feature: "Save to favorites",
+                })
+              }
             />
           </AnimatePresence>
-          
+
           <motion.button
             initial={false}
             animate={{ backgroundColor: "rgba(147, 51, 234, 0.2)" }}
@@ -114,12 +134,12 @@ export default function ReviewMode() {
             <button
               key={index}
               onClick={() => {
-                setDirection(index > selectedRecipeIndex ? 1 : -1)
-                setSelectedRecipeIndex(index)
+                setDirection(index > selectedRecipeIndex ? 1 : -1);
+                setSelectedRecipeIndex(index);
               }}
               className={`w-2 h-2 rounded-full transition-all ${
-                index === selectedRecipeIndex 
-                  ? "bg-purple-500 w-8" 
+                index === selectedRecipeIndex
+                  ? "bg-purple-500 w-8"
                   : "bg-gray-600 hover:bg-gray-500"
               }`}
             />
@@ -132,26 +152,30 @@ export default function ReviewMode() {
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleAddRecipe}
       />
-      
+
       <ComingSoonModal
         isOpen={comingSoonModal.isOpen}
         onClose={() => setComingSoonModal({ isOpen: false, feature: "" })}
         featureName={comingSoonModal.feature}
       />
     </>
-  )
+  );
 }
 
 const RecipeCard = forwardRef(function RecipeCard(
-  { recipe, onReview, onSave }: { 
-    recipe: Recipe
-    onReview: () => void
-    onSave: () => void
+  {
+    recipe,
+    onReview,
+    onSave,
+  }: {
+    recipe: Recipe;
+    onReview: () => void;
+    onSave: () => void;
   },
-  ref: React.Ref<HTMLDivElement>
+  ref: React.Ref<HTMLDivElement>,
 ) {
-  const presenceDirection = usePresenceData()
-  
+  const presenceDirection = usePresenceData();
+
   return (
     <motion.div
       ref={ref}
@@ -175,14 +199,18 @@ const RecipeCard = forwardRef(function RecipeCard(
             <div className="flex items-start gap-3">
               <span className="text-3xl">{recipe.emoji}</span>
               <div>
-                <h3 className="text-2xl font-bold text-gray-100">{recipe.name}</h3>
+                <h3 className="text-2xl font-bold text-gray-100">
+                  {recipe.name}
+                </h3>
                 <p className="text-sm text-gray-400">by {recipe.author}</p>
               </div>
             </div>
             <div className="text-right">
               <div className="flex items-center gap-1 text-yellow-500">
                 {"⭐".repeat(Math.floor(recipe.rating))}
-                <span className="text-sm text-gray-400 ml-1">({recipe.rating})</span>
+                <span className="text-sm text-gray-400 ml-1">
+                  ({recipe.rating})
+                </span>
               </div>
               <span className="text-xs text-purple-400">
                 {recipe.needsReview} reviews needed
@@ -195,17 +223,24 @@ const RecipeCard = forwardRef(function RecipeCard(
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="text-center">
               <p className="text-xs text-gray-500">Difficulty</p>
-              <p className={`font-semibold ${
-                recipe.difficulty === "easy" ? "text-green-500" :
-                recipe.difficulty === "medium" ? "text-yellow-500" :
-                "text-red-500"
-              }`}>
-                {recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1)}
+              <p
+                className={`font-semibold ${
+                  recipe.difficulty === "easy"
+                    ? "text-green-500"
+                    : recipe.difficulty === "medium"
+                      ? "text-yellow-500"
+                      : "text-red-500"
+                }`}
+              >
+                {recipe.difficulty.charAt(0).toUpperCase() +
+                  recipe.difficulty.slice(1)}
               </p>
             </div>
             <div className="text-center">
               <p className="text-xs text-gray-500">Time</p>
-              <p className="font-semibold text-gray-300">{recipe.cookingTime}</p>
+              <p className="font-semibold text-gray-300">
+                {recipe.cookingTime}
+              </p>
             </div>
             <div className="text-center">
               <p className="text-xs text-gray-500">Category</p>
@@ -234,8 +269,8 @@ const RecipeCard = forwardRef(function RecipeCard(
         </div>
       </div>
     </motion.div>
-  )
-})
+  );
+});
 
 /**
  * ==============   Icons   ================
@@ -250,7 +285,7 @@ const iconsProps: SVGProps<SVGSVGElement> = {
   strokeWidth: "2",
   strokeLinecap: "round",
   strokeLinejoin: "round",
-}
+};
 
 function ArrowLeft() {
   return (
@@ -258,7 +293,7 @@ function ArrowLeft() {
       <path d="m12 19-7-7 7-7" />
       <path d="M19 12H5" />
     </svg>
-  )
+  );
 }
 
 function ArrowRight() {
@@ -267,5 +302,5 @@ function ArrowRight() {
       <path d="M5 12h14" />
       <path d="m12 5 7 7-7 7" />
     </svg>
-  )
+  );
 }

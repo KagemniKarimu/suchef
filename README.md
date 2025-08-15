@@ -1,4 +1,3 @@
-
 ![GitHub License](https://img.shields.io/github/license/kagemnikarimu/suchef)
 ![GitHub branch status](https://img.shields.io/github/checks-status/kagemnikarimu/suchef/main)
 ![GitHub Created At](https://img.shields.io/github/created-at/kagemnikarimu/suchef)
@@ -8,7 +7,7 @@
 
 ## Overview
 
-`suchef` is a culinary intelligence, designed to bring a rich, prosocial, tutor-like experience to the practice of digitally assisted cooking. The name `suchef` comes from a simple pun, combining the common cuisinary term of art "sous-chef" for an assistant chef with Linux's famous `sudo` command that elevates priveleges.  The goal of `suchef` is to bring a super user experience to kitchen cooking by using AI insights.
+`suchef` is a culinary intelligence, designed to bring a rich, prosocial, tutor-like experience to the practice of digitally assisted cooking. The name `suchef` comes from a simple pun, combining the common cuisinary term of art "sous-chef" for an assistant chef with Linux's famous `sudo` command that elevates priveleges. The goal of `suchef` is to bring a super user experience to kitchen cooking by using AI insights.
 
 ## Architecture
 
