@@ -1,3 +1,5 @@
+# SuChef 🍳
+
 ![GitHub License](https://img.shields.io/github/license/kagemnikarimu/suchef)
 ![GitHub branch status](https://img.shields.io/github/checks-status/kagemnikarimu/suchef/main)
 ![GitHub Created At](https://img.shields.io/github/created-at/kagemnikarimu/suchef)
@@ -7,28 +9,85 @@
 
 ## Overview
 
-`suchef` is a culinary intelligence, designed to bring a rich, prosocial, tutor-like experience to the practice of digitally assisted cooking. The name `suchef` comes from a simple pun, combining the common cuisinary term of art "sous-chef" for an assistant chef with Linux's famous `sudo` command that elevates priveleges. The goal of `suchef` is to bring a super user experience to kitchen cooking by using AI insights.
+**SuChef** is an AI-powered culinary intelligence platform featuring Nyanya, your personal cooking companion. Designed to bring a rich, prosocial, tutor-like experience to digitally assisted cooking, SuChef transforms your kitchen experience with intelligent recipe suggestions, ingredient substitutions, and step-by-step guidance.
 
-## Architecture
+The name "SuChef" is a playful pun combining "sous-chef" (an assistant chef) with Linux's `sudo` command that elevates privileges - we bring superuser capabilities to your kitchen through AI insights.
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). The core functionality uses [reachat](https://reachat.dev/) to provide a pre-built user interface and unique chat experience. The prototype website is hosted on Vercel, for ease of access and ease of deployment.
+## ✨ Features (Partially Implemented)
+
+- **🥘 Nyanya Mode**: Get instant recipe suggestions based on ingredients you have  [Implemented]
+- **💬 Learn Mode**: Interactive chat for cooking techniques and culinary knowledge [Implemented]
+- **🎲 Recipe Randomizer**: Discover new dishes with customizable filters [Implemented]
+- **👨‍🍳 Guided Cooking**: Step-by-step instructions with real-time assistance [Unimplemented]
+- **⭐ Recipe Reviews**: Community-driven recipe ratings and feedback [Unimplemented]
+- **🎤 Voice Assistant**: ElevenLabs Convai integration for voice interactions [Implemented]
+- **🔊 Audio Feedback**: Immersive sound effects for all interactions [Implemented]
+- **🎨 Interactive UI**: Animated mascot and responsive design [Implemented]
+
+## 🏗️ Architecture
+
+Built with modern web technologies:
+- **Framework**: [Next.js 15](https://nextjs.org) with App Router
+- **Language**: TypeScript
+- **UI Components**: [Reachat](https://reachat.dev/) for chat interface, [Reablocks](https://reablocks.dev/) for theming
+- **Authentication**: [Clerk](https://clerk.com)
+- **Animations**: [Motion](https://motion.dev)
+- **AI Integration**: OpenAI API with fallback mock responses
+- **Voice AI**: [ElevenLabs](https://elevenlabs.io) Convai widget
+- **Audio**: [Howler.js](https://howlerjs.com) for sound effects
+- **Styling**: Tailwind CSS v4
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+
+- npm or yarn
+- OpenAI API key (optional, falls back to mock responses)
+- Clerk account for authentication
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/kagemnikarimu/suchef.git
+cd suchef
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables:
+```bash
+cp .env.local.example .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Add your API keys to `.env.local`:
+```
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
+CLERK_SECRET_KEY=your_clerk_secret
+OPENAI_API_KEY=your_openai_key (optional)
+```
+
+5. Run the development server:
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to see the app.
+
+## 🎮 Usage
+
+1. **Homepage**: Click and hold the "Let's Cook" button to enter the dashboard
+2. **Dashboard Navigation**: Use the circular navigation to switch between modes
+3. **Nyanya Toggle**: Turn on Nyanya personality for a warmer, more personal experience
+4. **Voice Mode**: Enable the ElevenLabs widget for voice interactions
+
+## 📝 Scripts
+
+- `npm run dev` - Start development server with Turbopack
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
