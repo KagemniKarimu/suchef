@@ -25,7 +25,7 @@ export default class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false, error: null };
-    
+
     this.failSound = new Howl({
       src: ["/media/ping_fail.mp3"],
       volume: 0.5,

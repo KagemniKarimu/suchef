@@ -17,12 +17,21 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "SuChef - Your AI Culinary Companion",
-  description: "AI-powered cooking assistant with personalized recipe guidance, ingredient suggestions, and culinary expertise from Chef Nyanya",
-  keywords: ["cooking", "recipes", "AI chef", "culinary", "meal planning", "Nyanya"],
+  description:
+    "AI-powered cooking assistant with personalized recipe guidance, ingredient suggestions, and culinary expertise from Chef Nyanya",
+  keywords: [
+    "cooking",
+    "recipes",
+    "AI chef",
+    "culinary",
+    "meal planning",
+    "Nyanya",
+  ],
   authors: [{ name: "SuChef Team" }],
   openGraph: {
     title: "SuChef - Your AI Culinary Companion",
-    description: "Transform your cooking with AI-powered recipe suggestions and guidance",
+    description:
+      "Transform your cooking with AI-powered recipe suggestions and guidance",
     type: "website",
   },
 };
