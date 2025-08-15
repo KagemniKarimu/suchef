@@ -2,17 +2,7 @@
 
 import * as motion from "motion/react-client"
 import { useState } from "react"
-
-interface Conversation {
-  id?: string
-  question?: string
-  response?: string
-}
-
-interface Session {
-  id: string
-  conversations?: Conversation[]
-}
+import { Session } from "reachat"
 
 interface LearnModeProps {
   sessions: Session[]
