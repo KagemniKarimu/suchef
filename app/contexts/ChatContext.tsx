@@ -1,6 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode, useRef, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useRef,
+  useEffect,
+} from "react";
 import { Session, Conversation } from "reachat";
 import { Howl } from "howler";
 
@@ -28,7 +35,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
           id: "welcome",
           question: "",
           response:
-            "🍳 Hey there, chef! I'm your friendly cooking assistant. Whether you need help with a tricky technique, want to know substitutions for ingredients, or just curious about culinary science - I'm here to help! What's cooking in your mind today?",
+            "Well hello there, sweetie! I'm Nyanya - been cooking since before your mama was born, and I've picked up a thing or two along the way. Whether you need help with a tricky technique, want to know what to do with those leftovers, or just curious about how to make something delicious - I'm here for you. Now, what can Nyanya help you with in the kitchen today?",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -72,14 +79,29 @@ export function ChatProvider({ children }: { children: ReactNode }) {
 
     if (current) {
       try {
-        // Call AI API
+        // Build conversation history in OpenAI format
+        const messages = [];
+
+        // Add previous conversations
+        current.conversations.forEach((conv) => {
+          if (conv.question) {
+            messages.push({ role: "user", content: conv.question });
+          }
+          if (conv.response) {
+            messages.push({ role: "assistant", content: conv.response });
+          }
+        });
+
+        // Add current message
+        messages.push({ role: "user", content: message });
+
+        // Call AI API with full conversation history
         const response = await fetch("/api/ai", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             mode: "learn",
-            message: message,
-            context: {},
+            messages: messages,
           }),
         });
 
@@ -109,7 +131,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         const newConversation: Conversation = {
           id: `${current.id}-${current.conversations.length}`,
           question: message,
-          response: `🍳 Sorry, I'm having trouble connecting right now. But let me tell you - ${message} is definitely something worth exploring in the kitchen!`,
+          response: `Oh honey, seems like we're having some connection troubles. But don't you worry - ${message} sounds like something worth talking about! Let's try again in a moment, alright?`,
           createdAt: new Date(),
           updatedAt: new Date(),
         };

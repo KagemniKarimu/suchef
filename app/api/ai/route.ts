@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     // Rate limiting
     const identifier = request.headers.get("x-forwarded-for") || "anonymous";
     const { success } = rateLimit.check(identifier);
-    
+
     if (!success) {
       return NextResponse.json(
         { error: "Too many requests. Please try again later." },
@@ -23,22 +23,29 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { prompt, message, mode } = body;
+    const { prompt, message, mode, messages } = body;
 
-    if (!message) {
+    // Handle both single message and conversation history
+    const hasMessages =
+      messages && Array.isArray(messages) && messages.length > 0;
+
+    if (!hasMessages && !message) {
       return NextResponse.json(
-        { error: "Message is required" },
+        { error: "Message or messages array is required" },
         { status: 400 },
       );
     }
 
-    // Basic input sanitization and limits
-    const sanitizedMessage = String(message).trim().slice(0, 1000);
-    if (sanitizedMessage.length === 0) {
-      return NextResponse.json(
-        { error: "Message cannot be empty" },
-        { status: 400 },
-      );
+    // Sanitize the latest message
+    let sanitizedMessage = "";
+    if (message) {
+      sanitizedMessage = String(message).trim().slice(0, 1000);
+      if (sanitizedMessage.length === 0) {
+        return NextResponse.json(
+          { error: "Message cannot be empty" },
+          { status: 400 },
+        );
+      }
     }
 
     // If no OpenAI key, use mock responses
@@ -63,12 +70,28 @@ export async function POST(request: NextRequest) {
     const systemPrompt =
       prompt || AI_PROMPTS[mode as AIMode] || AI_PROMPTS.learn;
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-5", // Using GPT-5 for demo
-      messages: [
+    // Build messages array - use provided history or create new conversation
+    let apiMessages: Array<{
+      role: "system" | "user" | "assistant";
+      content: string;
+    }> = [];
+
+    if (hasMessages) {
+      // Add system prompt first
+      apiMessages.push({ role: "system", content: systemPrompt });
+      // Add all conversation history
+      apiMessages.push(...messages);
+    } else {
+      // Single message format (backward compatibility)
+      apiMessages = [
         { role: "system", content: systemPrompt },
         { role: "user", content: sanitizedMessage },
-      ],
+      ];
+    }
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-5", // Using GPT-5 for demo
+      messages: apiMessages,
     });
 
     const aiMessage =
