@@ -2,7 +2,7 @@
 
 import * as motion from "motion/react-client";
 import { useEffect, useRef, useState } from "react";
-import "./styles.css";
+import "../styles/components.css";
 
 export default function StaggeredGridBackground() {
   const gridSize = 15; // Increased for better coverage
