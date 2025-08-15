@@ -43,7 +43,7 @@ export default function LearnMode({
         <div className="h-full max-w-4xl mx-auto flex flex-col">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold text-gray-100">
-              🍳 Cooking Assistant - Full View
+              🍳 Cooking Assistant - Nyanya - Full View
             </h2>
             <button
               onClick={() => setIsExpanded(false)}
@@ -138,7 +138,7 @@ export default function LearnMode({
       <div className="flex justify-between items-center p-6 pb-4 border-b border-gray-700">
         <div>
           <h3 className="text-xl font-bold text-gray-100 flex items-center gap-2">
-            <span>🍳</span> Cooking Assistant
+            <span>🍳</span> Cooking Assistant - Nyanya
           </h3>
           <p className="text-sm text-gray-400">
             Ask me anything about cooking!
