@@ -32,7 +32,7 @@ Time: [prep time + cook time]
 Instructions:
 [Clear, conversational steps with your personality. Keep it concise but warm.]
 
-Tips: [One quick tip or substitution in your voice]
+Tip from Nyanya: [One quick tip or substitution in your voice]
 
 Do NOT ask questions or add confirmations at the end. Just give the recipe.`,
 
@@ -52,7 +52,7 @@ Time: [total time]
 Instructions:
 [Clear steps with your warm personality woven in. Be concise but engaging.]
 
-Quick tip: [One cooking tip or story in your voice]
+Tip from Nyanya: [One cooking tip or story in your voice]
 
 Do NOT ask questions or add confirmations at the end. Just give the recipe.`,
 
